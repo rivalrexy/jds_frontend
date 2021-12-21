@@ -1,31 +1,26 @@
-import logo from "../logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form, Row, Col, InputGroup, Button, Card } from "react-bootstrap";
+import { Form, Row, Col, Button, Card } from "react-bootstrap";
 import "../App.css";
 import GetApi from "../services/Api";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 
 const Result = () => {
   const [provinces, setProvince] = useState([]);
-  const [provinceID, setProvinceID] = useState();
+  const [provinceID, setProvinceID] = useState(11);
   const [regencies, setRegencies] = useState([]);
-  const [regenciesID, setRegenciesID] = useState();
+  const [regenciesID, setRegenciesID] = useState(1101);
   const [districts, setDistricts] = useState([]);
-  const [districtsID, setDistrictsID] = useState();
+  const [districtsID, setDistrictsID] = useState(1101010);
   const [villages, setVillages] = useState([]);
-  const [villagesID, setVillagesID] = useState();
   const [validated, setValidated] = useState(false);
-
-  const [messageFile, setmessageFile] = useState([]);
-  const [messageFileType, setmessageFileType] = useState([]);
   const [filesize, setfilesize] = useState(0);
   useEffect(() => {
     GetApiProvinces();
     GetApiregencies(provinceID);
     GetApidistricts(regenciesID);
     GetApivillages(districtsID);
-    console.log(filesize);
-    console.log(provinceID);
+    //console.log(filesize);
+    //console.log(provinceID);
   }, [provinceID, regenciesID, districtsID]);
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -42,7 +37,7 @@ const Result = () => {
       .then((response) => {
         const newJSON = response.data;
         setProvince(newJSON);
-        console.log(newJSON);
+        //console.log(newJSON);
       })
       .catch((e) => {
         console.log(e);
@@ -54,8 +49,8 @@ const Result = () => {
       .then((response) => {
         const newJSON = response.data;
         setRegencies(newJSON);
-        console.log("regencies");
-        console.log(newJSON);
+        //console.log("regencies");
+        //console.log(newJSON);
       })
       .catch((e) => {
         console.log(e);
@@ -67,7 +62,7 @@ const Result = () => {
       .then((response) => {
         const newJSON = response.data;
         setDistricts(newJSON);
-        console.log(newJSON);
+        //console.log(newJSON);
       })
       .catch((e) => {
         console.log(e);
@@ -79,26 +74,13 @@ const Result = () => {
       .then((response) => {
         const newJSON = response.data;
         setVillages(newJSON);
-        console.log(newJSON);
+        //console.log(newJSON);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const fileChangedHandler = (event) => {
-    let file_size = event.target.files[0].size;
-
-    //or if you like to have name and type
-    let file_name = event.target.files[0].name;
-    let file_type = event.target.files[0].type;
-    console.log(file_size);
-    if (file_size > 4000) {
-      messageFile = "You must agree before submitting.";
-      messageFileType = "Invalid";
-    }
-    //do whatever operation you want to do here
-  };
   return (
     <div
       style={{
@@ -164,7 +146,9 @@ const Result = () => {
                     setProvinceID(e.target.value);
                   }}>
                   {provinces.map((data) => (
-                    <option value={data.id}>{data.name}</option>
+                    <option key={data.id} value={data.id}>
+                      {data.name}
+                    </option>
                   ))}
                 </Form.Select>
                 <br />
@@ -175,7 +159,9 @@ const Result = () => {
                     setRegenciesID(e.target.value);
                   }}>
                   {regencies.map((data) => (
-                    <option value={data.id}>{data.name}</option>
+                    <option key={data.id} value={data.id}>
+                      {data.name}
+                    </option>
                   ))}
                 </Form.Select>
                 <br />
@@ -186,18 +172,18 @@ const Result = () => {
                     setDistrictsID(e.target.value);
                   }}>
                   {districts.map((data) => (
-                    <option value={data.id}>{data.name}</option>
+                    <option key={data.id} value={data.id}>
+                      {data.name}
+                    </option>
                   ))}
                 </Form.Select>
                 <br />
                 <Form.Label>Kelurahan/Desa</Form.Label>
-                <Form.Select
-                  required
-                  onChange={(e) => {
-                    setVillagesID(e.target.value);
-                  }}>
+                <Form.Select required>
                   {villages.map((data) => (
-                    <option value={data.id}>{data.name}</option>
+                    <option key={data.id} value={data.id}>
+                      {data.name}
+                    </option>
                   ))}
                 </Form.Select>
                 <br />
@@ -260,7 +246,10 @@ const Result = () => {
                 feedbackType="invalid"
               />
             </Form.Group>
+            {/* <Route path="/about">
+                <Result /> */}
             <Button type="submit">Submit form</Button>
+            {/* </Route> */}
           </Form>
         </Card.Body>
       </Card>

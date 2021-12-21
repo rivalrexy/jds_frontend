@@ -1,11 +1,8 @@
-import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form, Row, Col, InputGroup, Button, Card } from "react-bootstrap";
+import { Form, Row, Col, Button, Card } from "react-bootstrap";
 import "./App.css";
 import GetApi from "./services/Api";
-import React, { useState, useEffect, useMemo } from "react";
-import { Route, Link } from "react-router-dom";
-import Result from "./components/Result";
+import React, { useState, useEffect } from "react";
 
 const App = () => {
   const [provinces, setProvince] = useState([]);
@@ -15,11 +12,7 @@ const App = () => {
   const [districts, setDistricts] = useState([]);
   const [districtsID, setDistrictsID] = useState(1101010);
   const [villages, setVillages] = useState([]);
-  const [villagesID, setVillagesID] = useState();
   const [validated, setValidated] = useState(false);
-
-  const [messageFile, setmessageFile] = useState([]);
-  const [messageFileType, setmessageFileType] = useState([]);
   const [filesize, setfilesize] = useState(0);
   useEffect(() => {
     GetApiProvinces();
@@ -186,11 +179,7 @@ const App = () => {
                 </Form.Select>
                 <br />
                 <Form.Label>Kelurahan/Desa</Form.Label>
-                <Form.Select
-                  required
-                  onChange={(e) => {
-                    setVillagesID(e.target.value);
-                  }}>
+                <Form.Select required>
                   {villages.map((data) => (
                     <option key={data.id} value={data.id}>
                       {data.name}
